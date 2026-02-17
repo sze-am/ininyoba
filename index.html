@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absensi PIPD UIN Siber</title>
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        #absensi-container { font-family: 'Plus Jakarta Sans', sans-serif; max-width: 960px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); color: #1e293b; }
+        #absensi-container h2 { margin: 0; color: #0f172a; font-weight: 800; text-align: center; }
+        #absensi-container .piket-info { text-align: center; font-size: 13px; color: #2563eb; font-weight: 700; margin: 15px 0; background: #eff6ff; padding: 12px; border-radius: 10px; border: 1px dashed #bfdbfe; line-height: 1.6; }
+        #absensi-container label { font-weight: 700; font-size: 13px; display: block; margin-top: 15px; color: #475569; }
+        #absensi-container input, #absensi-container select, #absensi-container textarea { width: 100%; padding: 12px 16px; margin: 8px 0; border-radius: 12px; border: 1.5px solid #e2e8f0; font-size: 14px; font-family: inherit; box-sizing: border-box; background: #f8fafc; transition: 0.2s; }
+        #absensi-container input:focus, #absensi-container textarea:focus { outline: none; border-color: #2563eb; background: #fff; }
+        #absensi-container button { padding: 12px 24px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-family: inherit; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-activate { background: #0f172a; color: white; width: 100%; }
+        .btn-snap { background: #10b981; color: white; flex: 2; }
+        .btn-switch { background: #f1f5f9; color: #475569; flex: 1; }
+        .btn-send { background: #2563eb; color: white; width: 100%; font-size: 16px; padding: 16px !important; margin-top: 20px; }
+        @media (min-width:768px){ #absensi-form-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; } .col-full { grid-column: 1/-1; } }
+        .viewport { position: relative; background: #000; border-radius: 16px; overflow: hidden; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
+        #video, #photo-preview { width: 100%; height: 100%; object-fit: cover; }
+        #video { transform: scaleX(-1); display: none; }
+        #photo-preview { display: none; border: 2px solid #10b981; border-radius: 16px; }
+        .overlay-watermark { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: flex-end; padding: 20px; pointer-events: none; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 45%); color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        .wm-content { font-size: 11px; line-height: 1.5; font-weight: 500; }
+        .wm-footer { margin-top: 6px; font-size: 10px; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 6px; color: #10b981; }
+        #divisi { background: #f1f5f9; cursor: not-allowed; font-weight: 600; color: #1e293b; }
+    </style>
+</head>
+<body>
+
+<div id="absensi-container">
+    <h2>Absensi Volunteer PIPD 2026</h2>
+    <div id="piket-today" class="piket-info">UIN Siber Syekh Nurjati Cirebon</div>
+
+    <form id="absensi-form-inner">
+        <div class="panel-left">
+            <label>Nama Volunteer</label>
+            <select id="nama" onchange="updateDivisi()" required>
+                <option value="">-- Pilih Nama --</option>
+                <option data-divisi="Mentor Editor Video">Raka Dian Pratama</option>
+                <option data-divisi="Mentor Editor Video">Adil Jihad Darmawan</option>
+                <option data-divisi="Mentor Fotografer/Videografer">Siti Hamidah</option>
+                <option data-divisi="Mentor Fotografer/Videografer">Auliya Rahmi</option>
+                <option data-divisi="Mentor Desain Grafis">Inayatul Azizi</option>
+                <option data-divisi="Mentor Desain Grafis">M. Surya Fadlilah Ramadhan</option>
+                <option data-divisi="Editor Video">Rizki Faturohman</option>
+                <option data-divisi="Editor Video">Muhammad Adam Habibie</option>
+                <option data-divisi="Editor Video">Muhammad Lazuardi Ramadhani</option>
+                <option data-divisi="Editor Video">Azza Taqiuddin Mubarok</option>
+                <option data-divisi="Editor Video">Abdul Karim</option>
+                <option data-divisi="Editor Video">Muhammad Rafly Maulana</option>
+                <option data-divisi="Editor Video">Amirul Abdillah Hakim</option>
+                <option data-divisi="Editor Video">M Rizki Maulana</option>
+                <option data-divisi="Editor Video">Ahmad Sakhi Habibi</option>
+                <option data-divisi="Editor Video">Cahyo Ferdhinan</option>
+                <option data-divisi="Editor Video">Dwi Juniarti Mirwandini</option>
+                <option data-divisi="Editor Video">Lu’lu Atul Ainiyah</option>
+                <option data-divisi="Editor Video">Naura Azzahra Akhmadi Tadjwid</option>
+                <option data-divisi="Editor Video">Anjani Yuniarti</option>
+                <option data-divisi="Editor Video">Zalfa Nabila</option>
+                <option data-divisi="Editor Video">Nabila Ainurrahmah</option>
+                <option data-divisi="Editor Video">Masya Islamiah</option>
+                <option data-divisi="Editor Video">Hanny Habibah Olansya Iyanuarinka</option>
+                <option data-divisi="Editor Video">Sri Wulan Apriliyanti</option>
+                <option data-divisi="Editor Video">Nurul Ramadhani</option>
+                <option data-divisi="Desainer Grafis">Fajar Nur Sidik</option>
+                <option data-divisi="Desainer Grafis">Farhan Hilmy Mubaarok</option>
+                <option data-divisi="Desainer Grafis">Nur Sahid</option>
+                <option data-divisi="Desainer Grafis">Sofiyatul Zannah</option>
+                <option data-divisi="Operator Podcast">Irfan Mubarok</option>
+                <option data-divisi="Operator Podcast">Dadan Danu</option>
+                <option data-divisi="Operator Podcast">Syarif Abdurohman</option>
+                <option data-divisi="Operator Podcast">Aminah Amna</option>
+                <option data-divisi="Operator Podcast">Ziyah Nujumul Inayah</option>
+                <option data-divisi="Fotografer/Videografer">Daffa Luthfillah</option>
+                <option data-divisi="Fotografer/Videografer">Faiz Abdur Rojib</option>
+                <option data-divisi="Fotografer/Videografer">Devina Nuramalina</option>
+                <option data-divisi="Fotografer/Videografer">Nisa Nurmalasari</option>
+                <option data-divisi="Fotografer/Videografer">Regar Herlambang</option>
+                <option data-divisi="Fotografer/Videografer">Rosiana Sari</option>
+                <option data-divisi="Operator Podcast">Tathia Putri Inasyah</option>
+                <option data-divisi="Operator Podcast">Muslikah Anggrayni</option>
+                <option data-divisi="Operator Podcast">Siti Rokhiya</option>
+                <option data-divisi="Operator Podcast">Eva Sulastri</option>
+                <option data-divisi="Fotografer/Videografer">Laila Ulfatur Rahmah</option>
+            </select>
+
+            <label>Divisi</label>
+            <input id="divisi" placeholder="Terisi otomatis" readonly>
+
+            <label>Notulensi / Kegiatan Hari Ini</label>
+            <textarea id="notulensi" placeholder="Apa yang dikerjakan hari ini?" rows="4" required></textarea>
+        </div>
+
+        <div class="panel-right">
+            <label>Bukti Kehadiran (Geotag)</label>
+            <div class="viewport">
+                <div id="loading-txt" style="color:#64748b; font-size: 12px;">Kamera Siap</div>
+                <video id="video" autoplay playsinline></video>
+                <img id="photo-preview">
+                <div id="wm-overlay" class="overlay-watermark">
+                    <div class="wm-content">
+                        <div id="wm-time"></div>
+                        <div id="wm-coords"></div>
+                    </div>
+                    <div id="wm-address" class="wm-footer"></div>
+                </div>
+            </div>
+            <div id="action-init" style="margin-top:15px;"><button type="button" class="btn-activate" onclick="aktifkanKamera()">Aktifkan Kamera & Lokasi</button></div>
+            <div id="action-cam" style="display:none; margin-top:15px; gap:10px;">
+                <button type="button" class="btn-switch" onclick="toggleKamera()">🔄 Balik</button>
+                <button type="button" class="btn-snap" onclick="ambilFoto()">📸 Ambil Foto</button>
+            </div>
+            <div id="action-retake" style="display:none; margin-top:10px;">
+                <button type="button" style="background:#fff1f2; color:#e11d48; width:100%; border:1px solid #fecdd3;" onclick="resetFoto()">Ambil Ulang</button>
+            </div>
+        </div>
+
+        <div class="col-full">
+            <button id="btnKirim" type="button" class="btn-send" onclick="kirimAbsensi()">Kirim Data Absensi</button>
+        </div>
+    </form>
+    <canvas id="hidden-canvas" style="display:none;"></canvas>
+</div>
+
+<script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbygJevxU9KeE-kYHIk_FByDlgBeIk-UcETC68kydXyNzdFmG4RK7ka-CU6PnPn_NPuXZA/exec"; 
+    
+    function updateDivisi() {
+        const selectNama = document.getElementById("nama");
+        const inputDivisi = document.getElementById("divisi");
+        const selectedOption = selectNama.options[selectNama.selectedIndex];
+        inputDivisi.value = selectedOption.getAttribute("data-divisi") || "";
+    }
+
+    const video = document.getElementById("video"), photoPreview = document.getElementById("photo-preview"), wmOverlay = document.getElementById("wm-overlay");
+    let currentLat="", currentLon="", currentLokasi="Mencari alamat...", fotoBase64="", isFront=true, streamObj=null;
+
+async function aktifkanKamera() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("Browser/Aplikasi ini tidak mendukung akses kamera.");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(async pos => {
+        currentLat = pos.coords.latitude.toFixed(7);
+        currentLon = pos.coords.longitude.toFixed(7);
+        document.getElementById("wm-coords").innerText = `Lat: ${currentLat} Lon: ${currentLon}`;
+        document.getElementById("wm-time").innerText = new Date().toLocaleString("id-ID");
+        
+        try {
+            const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${currentLat}&lon=${currentLon}`);
+            const d = await r.json();
+            currentLokasi = d.display_name.split(',').slice(0, 4).join(',');
+            document.getElementById("wm-address").innerText = "📍 " + currentLokasi;
+        } catch (e) { 
+            document.getElementById("wm-address").innerText = "📍 Gagal memuat alamat"; 
+        }
+        startStream();
+    }, (err) => {
+        alert("Gagal akses lokasi: " + err.message);
+    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+}
+
+    async function startStream() {
+        if (streamObj) streamObj.getTracks().forEach(t => t.stop());
+        try {
+            streamObj = await navigator.mediaDevices.getUserMedia({ video: { facingMode: isFront ? "user" : "environment" } });
+            video.srcObject = streamObj;
+            video.style.display = "block";
+            video.style.transform = isFront ? "scaleX(-1)" : "scaleX(1)";
+            wmOverlay.style.display = "flex";
+            document.getElementById("action-init").style.display = "none";
+            document.getElementById("action-cam").style.display = "flex";
+            document.getElementById("loading-txt").style.display = "none";
+        } catch (e) { alert("Kamera tidak dapat diakses."); }
+    }
+
+    function toggleKamera() { isFront = !isFront; startStream(); }
+
+    function ambilFoto() {
+        const canvas = document.getElementById("hidden-canvas");
+        canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        if(isFront) { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
+        ctx.drawImage(video, 0, 0);
+        ctx.setTransform(1,0,0,1,0,0);
+        
+        ctx.fillStyle = "rgba(0,0,0,0.75)";
+        ctx.fillRect(0, canvas.height - 110, canvas.width, 110);
+        ctx.fillStyle = "white";
+        ctx.font = "500 20px Plus Jakarta Sans";
+        ctx.fillText(new Date().toLocaleString("id-ID"), 40, canvas.height - 70);
+        ctx.font = "18px Plus Jakarta Sans";
+        ctx.fillText(`Koordinat: ${currentLat}, ${currentLon}`, 40, canvas.height - 45);
+        ctx.fillStyle = "#10b981";
+        ctx.font = "bold 18px Plus Jakarta Sans";
+        ctx.fillText("📍 " + currentLokasi.toUpperCase(), 40, canvas.height - 15);
+        
+        fotoBase64 = canvas.toDataURL("image/jpeg", 0.9);
+        photoPreview.src = fotoBase64;
+        photoPreview.style.display = "block"; video.style.display = "none"; wmOverlay.style.display = "none";
+        document.getElementById("action-cam").style.display = "none";
+        document.getElementById("action-retake").style.display = "block";
+    }
+
+    function resetFoto() {
+        photoPreview.style.display = "none"; video.style.display = "block"; wmOverlay.style.display = "flex";
+        document.getElementById("action-cam").style.display = "flex";
+        document.getElementById("action-retake").style.display = "none";
+        fotoBase64 = "";
+    }
+
+    async function kirimAbsensi() {
+        const n = document.getElementById("nama").value, 
+              d = document.getElementById("divisi").value, 
+              notul = document.getElementById("notulensi").value;
+
+        if(!n || !notul || !fotoBase64) return alert("Lengkapi data dan foto!");
+        
+        const btn = document.getElementById("btnKirim");
+        btn.disabled = true;
+        btn.innerText = "⏳ Sedang Mengirim...";
+
+        const payload = {
+            nama: n,
+            divisi: d,
+            notulensi: notul,
+            foto: fotoBase64,
+            lat: currentLat,
+            lon: currentLon,
+            alamat: currentLokasi
+        };
+
+        try {
+            await fetch(WEB_APP_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            });
+            // TEKS SUDAH DIUBAH DI SINI
+            alert("Absensi Berhasil Dikirim, Terima Kasih Geyyzzz");
+            location.reload();
+        } catch (err) {
+            alert("❌ Gagal mengirim. Coba lagi.");
+            btn.disabled = false;
+            btn.innerText = "Kirim Data Absensi";
+        }
+    }
+</script>
+
+</body>
+</html>
